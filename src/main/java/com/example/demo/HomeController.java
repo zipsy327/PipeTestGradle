@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,4 +33,9 @@ public class HomeController {
 		return list;	
 		
 	}
+	
+	@GetMapping("/hello")
+    public List<String> hello() {
+        return Arrays.asList("안녕하세요", "Hello");
+    }
 }
