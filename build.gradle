@@ -49,9 +49,15 @@ tasks.register("npm-install") {
 }*/
 
 task appNpmInstall(type: NpmTask) {
-  description = "Installs dependencies from package.json"
-  workingDir = file("${projectDir}/src/main/resources/static");
+  //description = "Installs dependencies from package.json"
+  //workingDir = file("${projectDir}/src/main/resources/static");
+  workingDir = file("${projectDir}/reactjs");
   args = ["install"]
+}
+
+task npmBuild(type: NpmTask) {
+	workingDir = file("${projectDir}/reactjs")
+	args = ["run", "build"]
 }
 
 def frontendDir = "$projectDir/reactjs"
@@ -65,8 +71,9 @@ sourceSets {
 }
 
 processResources {
-	//dependsOn "copyReactBuildFiles"
 	dependsOn "appNpmInstall"
+	dependsOn "npmBuild"	
+	dependsOn "copyReactBuildFiles"
 }
 
 task buildReact(type: Exec) {
