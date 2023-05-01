@@ -2,10 +2,11 @@ import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from "react";
 import img1 from './1.jpg';
+import axios from 'axios';
 
 function App() {
-  const [message, setMessage] = useState([]);
-
+    const [message, setMessage] = useState([]);
+    const [data,setData]=useState([]);
     useEffect(() => {
         fetch("/hello")
             .then((response) => {
@@ -14,6 +15,12 @@ function App() {
             .then(function (data) {
                 setMessage(data);
             });
+
+        axios.get("/list")
+        .then(res=>{
+            setData(res.data);
+            console.log(res.data.length);
+        })
     }, []);
 
     return (
@@ -24,6 +31,11 @@ function App() {
                     {message.map((text, index) => <li key={`${index}-${text}`}>{text}</li>)}
                 </ul>
             </header>
+            <hr/>
+            <section>
+                <h2>SpringBoot /list 로부터 받은 데이타 출력</h2>
+                {data.map((obj, index) => <li key={`${index}`}>{obj.name}:{obj.addr} 거주({obj.age}세)</li>)}
+            </section>
         </div>
     );
 }

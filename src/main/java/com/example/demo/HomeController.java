@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class HomeController {
 
-	@GetMapping("/")
+	@GetMapping("/list")
 	public List<Map<String, String>> home()
 	{
 		List<Map<String, String>> list=new Vector<>();
