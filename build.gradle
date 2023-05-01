@@ -36,6 +36,12 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+task appNpmInstall(type: NpmTask) {
+  description = "Installs dependencies from package.json"
+  workingDir = file("$projectDir/src/main/resources/static");
+  args = ["install"]
+}
+
 def frontendDir = "$projectDir/reactjs"
 
 sourceSets {
@@ -51,7 +57,7 @@ processResources {
 }
 
 task installReact(type: Exec) {
-	workingDir "$frontendDir"
+	//workingDir "$frontendDir"
 	inputs.dir "$frontendDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
@@ -65,7 +71,7 @@ task installReact(type: Exec) {
 
 task buildReact(type: Exec) {
 	dependsOn "installReact"
-	workingDir "$frontendDir"
+	//workingDir "$frontendDir"
 	inputs.dir "$frontendDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
