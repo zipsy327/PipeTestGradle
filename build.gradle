@@ -53,11 +53,24 @@ sourceSets {
 }
 
 processResources {
-	dependsOn "copyReactBuildFiles"
+	//dependsOn "copyReactBuildFiles"
+	dependsOn "appNpmInstall"
+}
+
+task buildReact(type: Exec) {
+	dependsOn "installReact"
+	workingDir "$frontendDir"
+	inputs.dir "$frontendDir"
+	group = BasePlugin.BUILD_GROUP
+	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "npm.cmd", "run-script", "build"
+	} else {
+		commandLine "npm", "run-script", "build"
+	}
 }
 
 task installReact(type: Exec) {
-	//workingDir "$frontendDir"
+	workingDir "$frontendDir"
 	inputs.dir "$frontendDir"
 	group = BasePlugin.BUILD_GROUP
 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
@@ -69,17 +82,6 @@ task installReact(type: Exec) {
 	}
 }
 
-task buildReact(type: Exec) {
-	dependsOn "installReact"
-	//workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "run-script", "build"
-	} else {
-		commandLine "npm", "run-script", "build"
-	}
-}
 
 task copyReactBuildFiles(type: Copy) {
 	dependsOn "buildReact"
@@ -87,6 +89,6 @@ task copyReactBuildFiles(type: Copy) {
 	into "$buildDir/resources/main/static"
 }
 
-tasks.bootJar {
-    dependsOn "copyReactBuildFiles"
-}
+//tasks.bootJar {
+//    dependsOn "copyReactBuildFiles"
+//}
