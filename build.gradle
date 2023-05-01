@@ -2,15 +2,34 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.11'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "com.github.node-gradle.node" version "3.5.1"
+	id "com.github.node-gradle.node" version '3.5.1'
 }
 
 node {  
+  version = '17.6.0'
+  npmVersion = '8.5.1' 
   download = true
 }
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8' 
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
+eclipse {
+    project {
+        name = "myapp"
+    }
+    jdt {  
+      sourceCompatibility = 11
+      targetCompatibility = 11
+      javaRuntimeName = "openjdk"
+    }
+}
 
 configurations {
 	compileOnly {
