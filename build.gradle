@@ -38,7 +38,7 @@ tasks.named('test') {
 
 task appNpmInstall(type: NpmTask) {
   description = "Installs dependencies from package.json"
-  workingDir = file("$projectDir/src/main/resources/static");
+  workingDir = file("${projectDir}/src/main/resources/static");
   args = ["install"]
 }
 
