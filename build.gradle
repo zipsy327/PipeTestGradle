@@ -53,7 +53,7 @@ sourceSets {
 }
 
 processResources {
-	//dependsOn "copyReactBuildFiles"
+	dependsOn "copyReactBuildFiles"
 	dependsOn "appNpmInstall"
 }
 
