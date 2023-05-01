@@ -1,11 +1,11 @@
 plugins {
-	id 'java'
+ 	id 'java'
 	id 'org.springframework.boot' version '2.7.11'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "com.github.node-gradle.node" version "3.5.1"
+  id "com.github.node-gradle.node" version "3.5.1" 
 }
 
-node {  
+node { 
   download = true
 }
 group = 'com.example'
@@ -33,51 +33,72 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-def frontendDir = "$projectDir/reactjs"
-
-sourceSets {
-	main {
-		resources {
-			srcDirs = ["$projectDir/src/main/resources"]
-		}
-	}
+task appNpmInstall(type: NpmTask) {
+  dependsOn "npmSetup"
+  description = "Installs dependencies from package.json"
+  workingDir = file("${projectDir}/src/main/resources/static");  
+  args = ["install"]
 }
+
+// CLI 환경에서 'build' 작업을 수행할 때 사용하는 설정
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8' 
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
+eclipse {
+    project {
+        name = "myapp"
+    }
+    jdt {  
+      sourceCompatibility = 11
+      targetCompatibility = 11
+      javaRuntimeName = "JavaSE-11"
+    }
+}
+
+
+application {
+    mainClass = 'com.example.demo'
+}
+
+// React build 설정
+def webappDir = "$projectDir/reactjs"
 
 processResources {
-	dependsOn "copyReactBuildFiles"
+  dependsOn "copyWebApp"
+  //dependsOn "appNpmInstall"
 }
 
-task installReact(type: Exec) {
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "audit", "fix"
-		commandLine 'npm.cmd', 'install'
-	} else {
-		commandLine "npm", "audit", "fix"
-		commandLine 'npm', 'install'
-	}
+
+task copyWebApp(type: Copy) {
+    dependsOn "buildReact"
+    from "$webappDir/build"
+    into "$projectDir/src/main/resources/static"
 }
 
 task buildReact(type: Exec) {
-	dependsOn "installReact"
-	workingDir "$frontendDir"
-	inputs.dir "$frontendDir"
-	group = BasePlugin.BUILD_GROUP
-	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-		commandLine "npm.cmd", "run-script", "build"
-	} else {
-		commandLine "npm", "run-script", "build"
-	}
+  dependsOn "installReact"
+  workingDir "$webappDir"
+  inputs.dir "$webappDir"
+  group = BasePlugin.BUILD_GROUP
+  if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
+    commandLine "npm.cmd", "run-script", "build"
+  } else {
+    commandLine "npm", "run-script", "build"
+  }
 }
 
-task copyReactBuildFiles(type: Copy) {
-	dependsOn "buildReact"
-	from "$frontendDir/build"
-	into "$buildDir/resources/main/static"
-}
-
-tasks.bootJar {
-    dependsOn "copyReactBuildFiles"
+task installReact(type: Exec) {
+  workingDir "$webappDir"
+  inputs.dir "$webappDir"
+  group = BasePlugin.BUILD_GROUP
+  if (System.getProperty("os.name").toLowerCase(Locale.ROOT).contains("windows")) {
+    commandLine "npm.cmd", "audit", "fix"
+    commandLine "npm.cmd", "install"
+  } else {
+    commandLine "npm", "audit", "fix"
+    commandLine "npm", "install"
+  }
 }
