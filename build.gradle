@@ -21,6 +21,12 @@ configurations {
 	}
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8' 
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
 repositories {
 	mavenCentral()
 }
@@ -35,11 +41,13 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+/*
 tasks.register("npm-install") {
   group = "application"
   description = "Installs dependencies from package.json"
   tasks.appNpmInstall.exec();
-}
+}*/
+
 task appNpmInstall(type: NpmTask) {
   description = "Installs dependencies from package.json"
   workingDir = file("${projectDir}/src/main/resources/static");
@@ -90,7 +98,7 @@ task installReact(type: Exec) {
 task copyReactBuildFiles(type: Copy) {
 	dependsOn "buildReact"
 	from "$frontendDir/build"
-	 into "$projectDir/src/main/resources/static"
+	into "$projectDir/src/main/resources/static"
 }
 
 //tasks.bootJar {
