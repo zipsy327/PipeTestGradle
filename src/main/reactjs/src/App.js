@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState} from "react";
 import img1 from './1.jpg';
-import axios from 'axios';
+//import axios from 'axios';
 
 function App() {
     const [message, setMessage] = useState([]);
@@ -25,7 +24,7 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header">  
+            <header>  
                 <img src={img1} style={{width:'200px'}}/>             
                 {/* <ul>
                     {message.map((text, index) => <li key={`${index}-${text}`}>{text}</li>)}
