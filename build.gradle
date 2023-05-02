@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.11'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id "com.github.node-gradle.node" version '3.5.1'
+	id "com.github.node-gradle.node" version '4.0.0'
 }
 
 // node {  
@@ -13,7 +13,7 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11.0.18'
+sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -21,11 +21,11 @@ configurations {
 	}
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8' 
-    sourceCompatibility = '11.0.18'
-    targetCompatibility = '11.0.18'
-}
+// tasks.withType(JavaCompile) {
+//     options.encoding = 'UTF-8' 
+//     sourceCompatibility = '11'
+//     targetCompatibility = '11'
+// }
 
 repositories {
 	mavenCentral()
