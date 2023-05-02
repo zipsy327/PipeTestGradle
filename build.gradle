@@ -60,7 +60,7 @@ task npmBuild(type: NpmTask) {
 	args = ["run", "build"]
 }
 
-def frontendDir = "$projectDir/reactjs"
+def frontendDir = "$projectDir/src/main/reactjs"
 
 sourceSets {
 	main {
