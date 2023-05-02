@@ -71,7 +71,7 @@ sourceSets {
 }
 
 processResources {
-	dependsOn "appNpmInstall"
+	//dependsOn "appNpmInstall"
 	dependsOn "npmBuild"	
 	dependsOn "copyReactBuildFiles"
 }
