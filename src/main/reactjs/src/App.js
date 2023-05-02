@@ -7,8 +7,10 @@ function App() {
     const [message, setMessage] = useState([]);
     const [data,setData]=useState([]);
     useEffect(() => {
+        console.log("useEffect");
         fetch("/hello")
             .then((response) => {
+                console.log("hello");
                 return response.json();
             })
             .then(function (data) {
@@ -17,6 +19,7 @@ function App() {
 
         axios.get("/list")
         .then(res=>{
+            console.log("list");
             setData(res.data);
             console.log(res.data.length);
         })
@@ -25,7 +28,8 @@ function App() {
     return (
         <div className="App">
             <header>  
-                <img src={img1} style={{width:'200px'}}/>             
+                <img src={img1} style={{width:'200px'}}/>   
+                <h1>Test</h1>          
                 <ul>
                     {message.map((text, index) => <li key={`${index}-${text}`}>{text}</li>)}
                 </ul>

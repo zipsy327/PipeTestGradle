@@ -140,7 +140,8 @@ processResources {
 task copyReactFile(type: Copy) {
     dependsOn "buildReact"
     from "$reactAppDir/build"
-    into "$buildDir/resources/main/static"
+    //into "$buildDir/resources/main/static"
+	into "$projectDir/src/main/resources/static/"
 }
 
 task buildReact(type: Exec) {
@@ -148,11 +149,9 @@ task buildReact(type: Exec) {
   workingDir "$reactAppDir"
   inputs.dir "$reactAppDir"
   group = BasePlugin.BUILD_GROUP
-  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-	//commandLine "CI=false"
+  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {	
     commandLine "npm.cmd", "run-script", "build"
-  } else {
-	//commandLine "CI=false"
+  } else {	
     commandLine "npm", "run-script", "build"
   }
 }
