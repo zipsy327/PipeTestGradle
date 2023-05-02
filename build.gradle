@@ -30,70 +30,6 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// task appNpmInstall(type: NpmTask) {
-//   //description = "Installs dependencies from package.json"
-//   //workingDir = file("${projectDir}/src/main/resources/static");
-//   workingDir = file("${projectDir}/reactjs");
-//   args = ["install"]
-// }
-
-// task npmBuild(type: NpmTask) {
-// 	workingDir = file("${projectDir}/reactjs")
-// 	args = ["run", "build"]
-// }
-
-// def frontendDir = "$projectDir/src/main/reactjs"
-
-// sourceSets {
-// 	main {
-// 		resources {
-// 			srcDirs = ["$projectDir/src/main/resources"]
-// 		}
-// 	}
-// }
-
-// processResources {
-// 	//dependsOn "appNpmInstall"
-// 	//dependsOn "npmBuild"	
-// 	dependsOn "copyReactBuildFiles"
-// }
-
-// task buildReact(type: Exec) {
-// 	dependsOn "installReact"
-// 	workingDir "$frontendDir"
-// 	inputs.dir "$frontendDir"
-// 	group = BasePlugin.BUILD_GROUP
-// 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-// 		commandLine "npm.cmd", "run-script", "build"
-// 	} else {
-// 		commandLine "npm", "run-script", "build"
-// 	}
-// }
-
-// task installReact(type: Exec) {
-// 	workingDir "$frontendDir"
-// 	inputs.dir "$frontendDir"
-// 	group = BasePlugin.BUILD_GROUP
-// 	if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
-// 		commandLine "npm.cmd", "audit", "fix"
-// 		commandLine 'npm.cmd', 'install'
-// 	} else {
-// 		commandLine "npm", "audit", "fix"
-// 		commandLine 'npm', 'install'
-// 	}
-// }
-
-
-// task copyReactBuildFiles(type: Copy) {
-// 	dependsOn "buildReact"
-// 	from "$frontendDir/build"
-// 	into "$projectDir/src/main/resources/static/"
-// }
-
-//tasks.bootJar {
-//    dependsOn "copyReactBuildFiles"
-//}
-
 // gradle을 실행하는 호스트에 node가 없을 경우를 대비해 
 // 지정된 버전의 node를 다운로드하게 만드는 설정
 // $ gradle npmSetup 을 실행하여 node 프로그램을 설치한다.
@@ -104,13 +40,7 @@ node {
   download = true
 }
 */
-/*
-tasks.register("npm-install") {
-  group = "application"
-  description = "Installs dependencies from package.json"
-  tasks.appNpmInstall.exec();
-}
-*/
+
 task appNpmInstall(type: NpmTask) {
   dependsOn "npmSetup"
   description = "Installs dependencies from package.json"
