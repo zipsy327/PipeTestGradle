@@ -1,25 +1,25 @@
 import './App.css';
 import {useEffect, useState} from "react";
 import img1 from './1.jpg';
-//import axios from 'axios';
+import axios from 'axios';
 
 function App() {
     const [message, setMessage] = useState([]);
     const [data,setData]=useState([]);
     useEffect(() => {
-        // fetch("/hello")
-        //     .then((response) => {
-        //         return response.json();
-        //     })
-        //     .then(function (data) {
-        //         setMessage(data);
-        //     });
+        fetch("/hello")
+            .then((response) => {
+                return response.json();
+            })
+            .then(function (data) {
+                setMessage(data);
+            });
 
-        // axios.get("/list")
-        // .then(res=>{
-        //     setData(res.data);
-        //     console.log(res.data.length);
-        // })
+        axios.get("/list")
+        .then(res=>{
+            setData(res.data);
+            console.log(res.data.length);
+        })
     }, []);
 
     return (
