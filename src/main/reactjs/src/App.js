@@ -29,7 +29,7 @@ function App() {
         <div className="App">
             <header>  
                 <img src={img1} style={{width:'200px'}}/>   
-                <h1>Test-수정</h1>          
+                <h1>Test-222</h1>          
                 <ul>
                     {message.map((text, index) => <li key={`${index}-${text}`}>{text}</li>)}
                 </ul>
