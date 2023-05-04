@@ -30,13 +30,13 @@ function App() {
             <header>  
                 <img src={img1} style={{width:'200px'}}/>   
                 <h1>Test-222</h1>          
-                <ul>
+                <ul style={{listStyle:'none'}}>
                     {message.map((text, index) => <li key={`${index}-${text}`}>{text}</li>)}
                 </ul>
             </header>
             <hr/>
             <section>
-                <h2>SpringBoot /list 로부터 받은 데이타 출력</h2>
+                <h2 style={{listStyle:'none'}}>SpringBoot /list 로부터 받은 데이타 출력</h2>
                 {data.map((obj, index) => <li key={`${index}`}>{obj.name}:{obj.addr} 거주({obj.age}세)</li>)}
             </section>
         </div>
